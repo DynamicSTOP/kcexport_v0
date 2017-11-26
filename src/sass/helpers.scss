@@ -1,0 +1,27 @@
+@mixin sprite-image($sprite) {
+  $sprite-image: nth($sprite, 9);
+  background-image: url(#{$sprite-image});
+}
+
+@mixin responsive-sprite($sprite) {
+  @include sprite-image($sprite);
+  background-position-x: nth($sprite,1)/(nth($sprite,7) - nth($sprite,5)) * 100%;
+  background-position-y: nth($sprite,2)/(nth($sprite,8) - nth($sprite,6)) * 100%;
+  background-size: nth($sprite,7)/nth($sprite,5)*100% nth($sprite,8)/nth($sprite,6)*100%;
+  display: inline-block;
+}
+
+@mixin responsive-map-sprite($map-sprite) {
+  @include responsive-sprite($map-sprite);
+  width: 100%;
+  height: 0;
+  padding-bottom: nth($map-sprite,6)/nth($map-sprite,5)*100%;
+}
+
+// i doubt anyone will ever shrink there phone size to 70px width
+// and if they do, i don't care.
+@mixin responsive-ship-sprite($ship-sprite) {
+  @include responsive-sprite($ship-sprite);
+  width: nth($ship-sprite, 5);
+  height: nth($ship-sprite, 6);
+}

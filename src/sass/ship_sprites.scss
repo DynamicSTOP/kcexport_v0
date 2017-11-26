@@ -1,0 +1,44 @@
+@import "generated/ship-sprite.scss";
+@import "helpers.scss";
+
+.shipNames div, .shipsDropTable .ship, .shipAvatar .ship {
+  margin: 3px;
+  display: inline-block;
+  border: 3px solid #807878;
+  border-radius: 100%;
+  box-sizing: content-box;
+  cursor: pointer;
+}
+
+.shipsDropTable .ship{
+  width: 35px;
+  height: 35px;
+  margin: 2px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.shipNames, .shipsDropTable, .shipAvatar {
+  .rare {
+    border-color: #42ffd7;;
+  }
+
+  .event {
+    border-color: #fc0;
+  }
+}
+
+
+@media (min-width: 768px) {
+  .shipNames div {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+@each $sprite in $spritesheet-sprites {
+  $sprite-name: nth($sprite, 10);
+  .#{$sprite-name} {
+    @include responsive-ship-sprite($sprite);
+  }
+}

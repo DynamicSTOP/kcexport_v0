@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+
+#  web:
+#    tty: true
+#    #     depends_on:
+#    #       - redis
+#    image: nginx:1.13.6
+#    volumes:
+#     - "${PWD}/build:/web"
+#     - "${PWD}/config/nginx:/etc/nginx/conf.d/mysite.template:ro"
+#    ports:
+#     - "8080:80"
+#     - "8081:3000"
+#    restart: always
+#    environment:
+#     - NGINX_HOST=kc-export.test
+#     - NGINX_PORT=80
+#    command: /bin/bash -c "envsubst < /etc/nginx/conf.d/mysite.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+
+
+
+  nodeapp:
+    tty: true
+    build: .
+    env_file:
+      - .env
+    image: kcexport
+    volumes:
+    - "${PWD}:/app"

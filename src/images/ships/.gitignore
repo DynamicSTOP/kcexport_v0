@@ -1,0 +1,9 @@
+# here you should download/copy ship icons
+# from here  https://github.com/KC3Kai/KC3Kai/tree/master/src/assets/img/ships
+# or you local KC3
+#
+# but please use only normal icons
+# cd to assets/img/ships folder
+# and run
+# for I in *[0-9].png ; do cp $I /path/to/here/ ; done;
+*.png
