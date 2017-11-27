@@ -37,8 +37,8 @@ const helpers = `
 }
 `;
 
-function shipScss(path,params,image) {
-    const name = "ship" + path.split("\\").pop().split("/").pop().split(".").shift();
+function _generatePartialSCSS(filename,params,image,filePath,prefixName) {
+    const name = prefixName + filename.split("\\").pop().split("/").pop().split(".").shift();
 
     return `
 $${name}-name: '${name}';
@@ -50,34 +50,42 @@ $${name}-width: ${params.width}px;
 $${name}-height: ${params.height}px;
 $${name}-total-width: ${image.width}px;
 $${name}-total-height: ${image.height}px;
-$${name}-image: './generated/ship-sprite.png';
-$${name}: (${params.x}px, ${params.y}px, ${-params.x}px, ${-params.y}px, ${params.width}px, ${params.height}px, ${image.width}px, ${image.height}px, './generated/ship-sprite.png', '${name}', );
+$${name}-image: '${filePath}';
+$${name}: (${params.x}px, ${params.y}px, ${-params.x}px, ${-params.y}px, ${params.width}px, ${params.height}px, ${image.width}px, ${image.height}px, '${filePath}', '${name}', );
 `;
 }
 
-
-Spritesmith.run({
-    src: fs.readdirSync(__dirname + '/../src/images/ships').map((s)=>__dirname + '/../src/images/ships/'+s),
-}, function handleResult(err, result) {
-    if(err)return console.error(err);
-    let str=``, names=[];
-    fs.writeFileSync(__dirname + '/../src/sass/generated/ship-sprite.png',result.image) ;
-    for(const i in result.coordinates){
-        if(result.coordinates.hasOwnProperty(i)){
-            str+=shipScss(i,result.coordinates[i],result.properties);
-            names.push("$ship" + i.split("\\").pop().split("/").pop().split(".").shift());
+function generateSCSS(imagesDirectory,spriteFilename,prefixName,padding=0){
+    Spritesmith.run({
+        src: fs.readdirSync(imagesDirectory).filter((s)=>s.indexOf("png")!==-1).map((s)=>imagesDirectory+'/'+s),
+        padding: padding
+    }, function handleResult(err, result) {
+        if(err) {
+            console.error(err);
+            process.exit(1);
         }
-    }
+        let str=``, names=[];
+        fs.writeFileSync(__dirname + `/../src/sass/generated/${spriteFilename}`,result.image) ;
+        for(const i in result.coordinates){
+            if(result.coordinates.hasOwnProperty(i)){
+                str+=_generatePartialSCSS(i,result.coordinates[i],result.properties,`./generated/${spriteFilename}`,prefixName);
+                names.push(`$${prefixName}` + i.split("\\").pop().split("/").pop().split(".").shift());
+            }
+        }
 
-    str+=`
+        str+=`
 $spritesheet-width: ${result.properties.width}px;
 $spritesheet-height: ${result.properties.height}px;
-$spritesheet-image: './ship-sprite.png';
+$spritesheet-image: './${spriteFilename}';
 $spritesheet-sprites: (${names.join(', ')}, );
-$spritesheet: (${result.properties.width}px, ${result.properties.height}px, './generated/ship-sprite.png', $spritesheet-sprites, );
+$spritesheet: (${result.properties.width}px, ${result.properties.height}px, './generated/${spriteFilename}', $spritesheet-sprites, );
 
     `;
-    fs.writeFileSync(__dirname + '/../src/sass/generated/ship-sprite.scss',str+helpers) ;
-});
+        fs.writeFileSync(__dirname + `/../src/sass/generated/${spriteFilename.replace(/\.\w+$/,'.scss')}`,str+helpers) ;
+        console.log(`spriteFilename done.`);
+    });
+}
 
-
+generateSCSS(__dirname + '/../src/images/ships','ship-sprite.png','ship');
+//4px should prevent stupid overlapping in browser. haha chrome.
+generateSCSS(__dirname + '/../src/images/locks','ship-locks.png', 'lock', 4);

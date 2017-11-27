@@ -6,7 +6,6 @@ import ContentContainer from "./components/ContentContainer";
 class App extends Component {
     constructor(){
         super();
-        console.log("App");
     }
 
     render() {

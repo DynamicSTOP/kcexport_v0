@@ -52,11 +52,10 @@ function registerValidSW(swUrl) {
         installingWorker.onstatechange = () => {
           if (installingWorker.state === 'installed') {
             if (navigator.serviceWorker.controller) {
-              // At this point, the old content will have been purged and
-              // the fresh content will have been added to the cache.
-              // It's the perfect time to display a "New content is
-              // available; please refresh." message in your web app.
-              console.log('New content is available; please refresh.');
+                let d = Document.createElement("DIV");
+                d.classList.add("newContent");
+                d.innerHTML = 'New content is available; please refresh.';
+                document.body.insertBefore(d, document.body.firstChild);
             } else {
               // At this point, everything has been precached.
               // It's the perfect time to display a

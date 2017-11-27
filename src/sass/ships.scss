@@ -53,11 +53,11 @@
       float:right;
       width: calc( var(--ship-element-height) - 2px );
       height: calc( var(--ship-element-height) - 2px );
-      line-height: var(--ship-element-height);
+      line-height: calc(var(--ship-element-height) - 2px );
+      padding-left:2px;
       text-align:center;
       font-size: calc(var(--ship-element-height) / 2);
       color:white;
-      margin:1px;
       background: #737373;
       border-radius:var(--ship-element-height);
     }
@@ -65,6 +65,7 @@
 
   .kce-ship-element.kce-ship{
     background: #3e3b3b;
+    position:relative;
 
     .kce-ship-icon{
       width:var(--ship-element-height);
@@ -81,10 +82,20 @@
     }
 
     .kce-ship-text{
-      margin-left: 8px;
       float: left;
       font-size: calc( var(--ship-element-height) / 3 );
-      width: calc( var(--ship-element-width) - 8px - var(--ship-element-height) * 3.2 );
+      width: calc( var(--ship-element-width) - 8px - var(--ship-element-height) * 3.5 );
+      margin-left: calc( var(--ship-element-height) * 0.4 );
+    }
+
+    .kce-ship-lock{
+      width: calc( var(--ship-element-height) * 0.5 );
+      height: calc( var(--ship-element-height) * 0.7 );
+      // one icon width
+      left: calc( var(--ship-element-height) - 10px );
+      float:left;
+      position:absolute;
+      bottom:0;
     }
 
     .kce-right-icon{

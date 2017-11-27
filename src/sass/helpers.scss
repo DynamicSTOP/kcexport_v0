@@ -5,8 +5,17 @@
 
 @mixin responsive-sprite($sprite) {
   @include sprite-image($sprite);
-  background-position-x: nth($sprite,1)/(nth($sprite,7) - nth($sprite,5)) * 100%;
-  background-position-y: nth($sprite,2)/(nth($sprite,8) - nth($sprite,6)) * 100%;
+  @if(nth($sprite,1)> 0 ){
+    background-position-x: nth($sprite,1)/(nth($sprite,7) - nth($sprite,5)) * 100%;
+  } @else {
+    background-position-x: 0;
+  }
+
+  @if(nth($sprite,2)> 0 ){
+    background-position-y: nth($sprite,2)/(nth($sprite,8) - nth($sprite,6)) * 100%;
+  } @else {
+    background-position-y: 0;
+  }
   background-size: nth($sprite,7)/nth($sprite,5)*100% nth($sprite,8)/nth($sprite,6)*100%;
   display: inline-block;
 }
@@ -20,8 +29,8 @@
 
 // i doubt anyone will ever shrink there phone size to 70px width
 // and if they do, i don't care.
-@mixin responsive-ship-sprite($ship-sprite) {
-  @include responsive-sprite($ship-sprite);
-  width: nth($ship-sprite, 5);
-  height: nth($ship-sprite, 6);
+@mixin responsive-s-sprite($sprite) {
+  @include responsive-sprite($sprite);
+  width: nth($sprite, 5);
+  height: nth($sprite, 6);
 }
