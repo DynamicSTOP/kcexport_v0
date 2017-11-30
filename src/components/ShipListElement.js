@@ -4,6 +4,16 @@ import "../sass/ship_sprites.css";
 import "../sass/ship_locks.css";
 
 class ShipListElement extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {hidden: props.hidden};
+    }
+
+    componentWillReceiveProps(newProps) {
+        this.setState({hidden: newProps.hidden});
+    }
+
+
     render() {
         //console.log(localStorage.getItem("kc3ExtensionPath"));
         const modBoxes = [];
@@ -36,7 +46,7 @@ class ShipListElement extends Component {
             icon = React.createElement("div", {className: `kce-ship-icon ship${this.props.ship.masterId}`});
         }
         return (
-            <li className="kce-ship-element kce-ship">
+            <li className={`kce-ship-element kce-ship ${this.state.hidden ? "hidden" : ""}`}>
                 {icon}
                 <div className={`kce-ship-lock ${shipLockName}`}
                      title={this.props.ship.sally > 0 ? `lock ${this.props.ship.sally}` : ``}></div>

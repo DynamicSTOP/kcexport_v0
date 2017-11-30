@@ -52,9 +52,10 @@ function registerValidSW(swUrl) {
         installingWorker.onstatechange = () => {
           if (installingWorker.state === 'installed') {
             if (navigator.serviceWorker.controller) {
-                let d = Document.createElement("DIV");
+                let d = document.createElement("DIV");
                 d.classList.add("newContent");
                 d.innerHTML = 'New content is available; please refresh.';
+                document.getElementById("root").classList.add("newContentMargin");
                 document.body.insertBefore(d, document.body.firstChild);
             } else {
               // At this point, everything has been precached.

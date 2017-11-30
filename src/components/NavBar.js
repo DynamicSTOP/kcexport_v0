@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import './../sass/navbar.css';
 
 class NavBar extends Component {
     constructor(props) {
@@ -6,7 +7,8 @@ class NavBar extends Component {
         this.state = {dropDown: false};
     }
 
-    toggle() {
+    toggle(e) {
+        e.preventDefault();
         this.setState({dropDown: !this.state.dropDown});
     }
 
@@ -23,24 +25,24 @@ class NavBar extends Component {
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                         </button>
-                        <a className="navbar-brand" href="#">KC Exporter (pre alpha build 1.0.1)</a>
+                        <a className="navbar-brand" href="/#/">KC Exporter (pre alpha build 1.0.2)</a>
                     </div>
                     <div className={`collapse navbar-collapse ${this.state.dropDown ? "in" : ""}`} id="bs-example-navbar-collapse-1">
                         <ul className="nav navbar-nav navbar-right navbar-shown">
-                            <li className="active"><a href="#">Home <span className="sr-only">(current)</span></a></li>
+                            <li className="active"><a href="/#/">Home <span className="sr-only">(current)</span></a></li>
                             <li className={`dropdown ${this.state.dropDown ? "open" : ""}`}>
-                                <a href="#" onClick={this.toggle.bind(this)}
+                                <a href="/#/" onClick={this.toggle.bind(this)}
                                    className="dropdown-toggle"
                                    data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown
                                     <span className="caret"></span></a>
                                 <ul className="dropdown-menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
+                                    <li><a href="/#/">Action</a></li>
+                                    <li><a href="/#/">Another action</a></li>
+                                    <li><a href="/#/">Something else here</a></li>
                                     <li role="separator" className="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
+                                    <li><a href="/#/">Separated link</a></li>
                                     <li role="separator" className="divider"></li>
-                                    <li><a href="#">One more separated link</a></li>
+                                    <li><a href="/#/">One more separated link</a></li>
                                 </ul>
                             </li>
                         </ul>

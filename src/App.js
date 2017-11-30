@@ -4,10 +4,6 @@ import NavBar from './components/NavBar';
 import ContentContainer from "./components/ContentContainer";
 
 class App extends Component {
-    constructor(){
-        super();
-    }
-
     render() {
         return ([
                 <NavBar key={"nav"}/>,
