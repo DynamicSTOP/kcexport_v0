@@ -1,11 +1,16 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "KC Export",
+  "name": "KC Export",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "site-fb.png",
+      "sizes": "400x400",
+      "type": "image/png"
+    },
+    {
+      "src": "site-fb.jpg",
+      "sizes": "400x400",
+      "type": "image/jpeg"
     }
   ],
   "start_url": "./index.html",

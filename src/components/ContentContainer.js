@@ -3,11 +3,12 @@ import Index from "./Index";
 import ShipList from "./ShipList";
 import NewTabParser from "./NewTabParser";
 import {HashRouter as Router, Route, Switch} from 'react-router-dom'
+import dp1 from "../datapacker/datapacker.v1";
 
 class ContentContainer extends Component {
     parseShips(ships) {
-        sessionStorage.ships = ships;
-        this.router.history.push("/ship-list")
+        //can use a session storage here, but it won't work in incognito safari... fuck safari, man
+        this.router.history.push("/ship-list/" + dp1.packShips(JSON.parse(ships)));
     }
 
     render() {

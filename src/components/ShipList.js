@@ -76,11 +76,27 @@ class ShipList extends Component {
         this.updateShips(dp1.unpackShips(hash));
     }
 
+    componentWillUpdate(newPros,newState){
+        try{
+            localStorage.setItem("lastList",JSON.stringify(newState.shipsData));
+        }catch(e){
+            //safari is stupid enough to show that storage available and throw errors on save
+        }
+    }
+
+    saveInSS(data){
+        try{
+            sessionStorage.setItem("ships",data);
+        }catch(e){
+            //safari is stupid enough to show that storage available and throw errors on save
+        }
+    }
+
     componentDidMount() {
         let hash = window.location.hash.substring("#/ship-list/".length);
         if (hash.length > 0) {
             this.parseShips(hash);
-            sessionStorage.ships = JSON.stringify(dp1.unpackShips(hash));
+            this.saveInSS(JSON.stringify(dp1.unpackShips(hash)));
             window.location.hash = "#/ship-list";
             return;
         }
@@ -89,6 +105,13 @@ class ShipList extends Component {
             try {
                 const ships = JSON.parse(sessionStorage.ships);
                 this.updateShips(ships);
+            } catch (Error) {
+                console.error(Error);
+            }
+        } else if(typeof localStorage.lastList !== "undefined"){
+            try {
+                const lastList = JSON.parse(localStorage.lastList);
+                this.setState({shipsData:lastList});
             } catch (Error) {
                 console.error(Error);
             }

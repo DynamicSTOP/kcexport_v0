@@ -25,7 +25,7 @@ class NavBar extends Component {
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                         </button>
-                        <a className="navbar-brand" href="/#/">KC Exporter (pre alpha build 1.0.2)</a>
+                        <a className="navbar-brand" href="/#/">KC Exporter (alpha 0.3)</a>
                     </div>
                     <div className={`collapse navbar-collapse ${this.state.dropDown ? "in" : ""}`} id="bs-example-navbar-collapse-1">
                         <ul className="nav navbar-nav navbar-right navbar-shown">
