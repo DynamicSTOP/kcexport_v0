@@ -1,15 +1,28 @@
 import React, {Component} from 'react';
 import './../sass/navbar.css';
+import listStorage from './../objects/ListStorage';
 
 class NavBar extends Component {
     constructor(props) {
         super(props);
-        this.state = {dropDown: false};
+        this.state = {dropDown: false, dropDownLinks: false};
     }
 
-    toggle(e) {
-        e.preventDefault();
-        this.setState({dropDown: !this.state.dropDown});
+    toggle(params) {
+        if (params.both)
+            this.setState({dropDown: !this.state.dropDown, dropDownLinks: !this.state.dropDown});
+        else if (params.links)
+            this.setState({dropDownLinks: !this.state.dropDownLinks, dropDown: false});
+        else
+            this.setState({dropDown: !this.state.dropDown, dropDownLinks: false});
+    }
+
+    closeDropDowns() {
+        this.setState({dropDown: false, dropDownLinks: false});
+    }
+
+    callSave(){
+        listStorage.triggerSave();
     }
 
     render() {
@@ -18,31 +31,42 @@ class NavBar extends Component {
                 <div className="container-fluid">
                     <div className="navbar-header">
                         <button type="button" className="navbar-toggle collapsed" data-toggle="collapse"
-                                onClick={this.toggle.bind(this)}
+                                onClick={this.toggle.bind(this, {both: true})}
                                 data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                             <span className="sr-only">Toggle navigation</span>
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                         </button>
-                        <a className="navbar-brand" href="/#/">KC Exporter (alpha 0.3)</a>
+                        <a className="navbar-brand" href="/#/">KC Exporter (alpha 0.4)</a>
                     </div>
-                    <div className={`collapse navbar-collapse ${this.state.dropDown ? "in" : ""}`} id="bs-example-navbar-collapse-1">
+                    <div className={`collapse navbar-collapse ${this.state.dropDown ? "in" : ""}`}
+                         id="bs-example-navbar-collapse-1">
                         <ul className="nav navbar-nav navbar-right navbar-shown">
-                            <li className="active"><a href="/#/">Home <span className="sr-only">(current)</span></a></li>
+                            <li><a href="/#/">Home</a></li>
+                            <li><a onClick={this.callSave.bind(this)}>Save</a></li>
+
                             <li className={`dropdown ${this.state.dropDown ? "open" : ""}`}>
-                                <a href="/#/" onClick={this.toggle.bind(this)}
+                                <a onClick={this.toggle.bind(this, {})}
                                    className="dropdown-toggle"
-                                   data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown
+                                   data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Lists
                                     <span className="caret"></span></a>
                                 <ul className="dropdown-menu">
-                                    <li><a href="/#/">Action</a></li>
-                                    <li><a href="/#/">Another action</a></li>
-                                    <li><a href="/#/">Something else here</a></li>
+                                    <li><a href="/#/ship-list/last" onClick={this.closeDropDowns.bind(this)}>Last ship
+                                        list</a></li>
+                                    <li><a href="/#/saved">Saved lists</a></li>
+                                </ul>
+                            </li>
+
+                            <li className={`dropdown ${this.state.dropDownLinks ? "open" : ""}`}>
+                                <a onClick={this.toggle.bind(this, {links: true})}
+                                   className="dropdown-toggle"
+                                   data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Share
+                                    <span className="caret"></span></a>
+                                <ul className="dropdown-menu">
+                                    <li><a href="/#/">Make ShortLink</a></li>
                                     <li role="separator" className="divider"></li>
-                                    <li><a href="/#/">Separated link</a></li>
-                                    <li role="separator" className="divider"></li>
-                                    <li><a href="/#/">One more separated link</a></li>
+                                    <li><a href="/#/">Full Link</a></li>
                                 </ul>
                             </li>
                         </ul>

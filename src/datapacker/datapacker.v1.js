@@ -188,6 +188,34 @@ class datapacker_v1 {
         return JSON.stringify(shipsArray) === JSON.stringify(this.unpackShips(this.packShips(shipsArray)));
     }
 
+    _validate(testString) {
+        const regExp = new RegExp("[" + this.alphabet.replace("-", "\\-") + ";,]+");
+        if (testString.replace(regExp, '').length > 0)
+            throw new Error(`invalid characters -> ${testString.replace(regExp, '')}`);
+
+        if (testString.length === 0 || testString.length > 7500) {//5k symbols should cover 400 ships
+            throw new Error(`invalid size -> ${testString.length}`)
+        }
+
+        const arr = testString.split(`;;`);
+        if(arr.length<=1 || arr.length>3){
+            throw new Error(`No version or data. ;; split length -> ${arr.length}`);
+        }
+
+        const v = arr.shift();
+        if (v !== this.version)
+            throw new Error(`incorrect packer version ${v}, should be ${this.version}`);
+
+        arr[0].split(",").map((s) => {
+            if(s.length===0 || s.length>17){
+                throw new Error(`ship length problem -> ${s.length}, '${s.substr(0,20)}'`)
+            }
+            return true;
+        });
+
+        return true;
+    }
+
 }
 const dp1 = new datapacker_v1();
 export default dp1;

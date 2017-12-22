@@ -4,10 +4,18 @@ import NavBar from './components/NavBar';
 import ContentContainer from "./components/ContentContainer";
 
 class App extends Component {
+    saveHandler() {
+        if(this.contentContainer){
+            this.contentContainer.triggerSave();
+        }
+    }
+
     render() {
         return ([
-                <NavBar key={"nav"}/>,
-                <ContentContainer key={"content"}/>
+                <NavBar saveHandler={this.saveHandler.bind(this)} key={"nav"}/>,
+                <ContentContainer key={"content"} ref={(contentContainer) => {
+                    this.contentContainer = contentContainer;
+                }}/>
             ]
         );
     }
