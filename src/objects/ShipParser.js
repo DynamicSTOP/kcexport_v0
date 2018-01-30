@@ -10,7 +10,7 @@ class ShipParser {
         ];
     }
 
-    static makeShipsData(shipList) {
+    makeShipsData(shipList) {
         return [].concat.apply([], shipList.map(l =>
             l.ships.map(s => [
                 s.id, s.masterId, s.lvl, s.sally,

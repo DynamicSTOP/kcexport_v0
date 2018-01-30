@@ -21,8 +21,8 @@ class SavedList extends Component {
         let button = proxy.target;
         if(button.disabled) return;
         button.disabled = true;
-        fetch('https://api.kc-db.info/list/ships', {
-            method: 'post',
+        fetch('https://api.kc-db.info/v1/list/ships', {
+            method: 'put',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',

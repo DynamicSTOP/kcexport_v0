@@ -8,7 +8,8 @@ class ListStorage extends EventEmitter{
         this.number = 0;
         this.shortLinks={};
         try {
-            Object.assign(this, JSON.parse(localStorage.listStorage) || {});
+            if (typeof localStorage.listStorage !== "undefined")
+                Object.assign(this, JSON.parse(localStorage.listStorage) || {});
         } catch (e) {
             console.error(e);
         }
@@ -19,7 +20,7 @@ class ListStorage extends EventEmitter{
         this.saveSDInSS(shipsData);
     }
 
-    static saveSDInSS(shipList) {
+    saveSDInSS(shipList) {
         try {
             sessionStorage.setItem("ships", shipParser.packShipList(shipList));
         } catch (e) {
@@ -27,7 +28,7 @@ class ListStorage extends EventEmitter{
         }
     }
 
-    static saveSDInLS(shipList) {
+    saveSDInLS(shipList) {
         try {
             localStorage.setItem("lastList", shipParser.packShipList(shipList));
         } catch (e) {
@@ -35,7 +36,7 @@ class ListStorage extends EventEmitter{
         }
     }
 
-    static getLastShips() {
+    getLastShips() {
         if (typeof sessionStorage.ships !== "undefined") {
             try {
                 return shipParser.unpackShipList(sessionStorage.ships);
@@ -77,8 +78,9 @@ class ListStorage extends EventEmitter{
     }
 
     saveLS(shipList) {
-        if (shipList.length === 0)
-            return;
+        if (shipList.length === 0){
+            return false;
+        }
         try {
             const packed = shipParser.packShipList(shipList);
             let check = this.checkSavedShips(packed);

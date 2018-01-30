@@ -19,6 +19,7 @@ class ShipList extends Component {
                 this.state.shipsData = ships;
         }
         this._save = this.triggerSave.bind(this);
+        listStorage.on('saveEvent',this._save);
     }
 
     triggerSave(){
@@ -37,7 +38,7 @@ class ShipList extends Component {
 
     componentDidMount() {
         if(this.props.shortLink===true){
-            fetch(`https://api.kc-db.info/list/ships/${this.props.match.params.shortLink}`)
+            fetch(`https://api.kc-db.info/v1/list/ships/${this.props.match.params.shortLink}`)
                 .then((data) => data.json())
                 .then((json) => {
                     if(json.error){
@@ -61,7 +62,6 @@ class ShipList extends Component {
             if (ships !== null && ships.length)
                 this.setState({shipsData: ships});
         }
-        listStorage.on('saveEvent',this._save);
     }
 
     componentWillUnmount(){
